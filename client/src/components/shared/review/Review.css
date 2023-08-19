@@ -1,0 +1,11 @@
+.FoodReviewCard {
+    margin-top: 1em;
+}
+
+.ReviewTitle {
+    display: inline-block;
+}
+
+.ReviewAvatar {
+    float: right;
+}

@@ -1,0 +1,11 @@
+.RecentActivityHeader {
+    font-size: 3.5em;
+    font-weight: 100;
+}
+
+@media only screen and (max-width: 600px),
+(max-height: 600px) {
+    .RecentActivityHeader {
+        font-size: 2em;
+    }
+}

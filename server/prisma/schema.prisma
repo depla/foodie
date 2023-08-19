@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model food {
+  id           Int          @id @default(autoincrement())
+  food_name    String       @db.VarChar(100)
+  description  String?      @db.VarChar(65535)
+  location     String       @db.VarChar(150)
+  latitude     Decimal?     @db.Decimal
+  longitude    Decimal?     @db.Decimal
+  date_added   DateTime     @default(now()) @db.Timestamptz(6)
+  submitted_by Int?
+  foodie_user  foodie_user? @relation(fields: [submitted_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  food_image   food_image[]
+  review       review[]
+}
+
+model foodie_user {
+  id               Int          @id(map: "user_pkey") @default(autoincrement())
+  avatar_url       String?      @db.VarChar(2048)
+  username         String       @unique @db.VarChar(50)
+  password         String       @db.VarChar(256)
+  email            String       @unique @db.VarChar(320)
+  avatar_file_name String?      @db.VarChar(100)
+  food             food[]
+  food_image       food_image[]
+  review           review[]
+}
+
+model review {
+  id            Int         @id @default(autoincrement())
+  rating        Decimal     @db.Decimal
+  title         String      @db.VarChar(2048)
+  description   String      @db.VarChar(65535)
+  author        Int
+  item_reviewed Int
+  date_added    DateTime    @default(now()) @db.Timestamptz(6)
+  foodie_user   foodie_user @relation(fields: [author], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  food          food        @relation(fields: [item_reviewed], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model food_image {
+  id          Int         @id(map: "food_images_pkey") @default(autoincrement())
+  file_name   String      @db.VarChar(100)
+  url         String      @db.VarChar(2048)
+  food_id     Int         @default(0)
+  user_id     Int         @default(0)
+  food        food        @relation(fields: [food_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "food_images_food_id_fkey")
+  foodie_user foodie_user @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}

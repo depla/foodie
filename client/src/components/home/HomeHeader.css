@@ -1,0 +1,30 @@
+/* The hero image */
+.hero-image {
+    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1590987337605-84f3ed4dc29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80");
+
+    background-size: 'cover';
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: inline-block;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+    text-align: center;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+}
+
+@media only screen and (max-width: 600px),
+(max-height: 600px) {
+    .hero-text {
+        font-size: 1rem;
+    }
+}
